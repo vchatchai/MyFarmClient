@@ -13,7 +13,6 @@ from devices.motor import motor
 app = Flask(__name__)
 # app.register_blueprint(example)
 app.register_blueprint(motor)
-a
 
 @app.route('/articles')
 def api_articles():

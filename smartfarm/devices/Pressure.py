@@ -22,7 +22,7 @@ class Pressure:
 
         i2c.init("/dev/i2c-0")  #Initialize module to use /dev/i2c-2
         i2c.open(0x48)  #The slave device address is 0x55
-        topic = 'pump/'+name
+        topic = 'pressure/'+name
         #If we want to write to some register
         #i2c.write([0xAA, 0x20]) #Write 0x20 to register 0xAA
         #i2c.write([0xAA, 0x10, 0x11, 0x12]) #Do continuous write with start address 0xAA
@@ -40,7 +40,7 @@ class Pressure:
             time.sleep(9)
             data = i2c.read(2)
             data = int.from_bytes(data,byteorder='big', signed=True)
-            print(str(data))
+            print(str(topic)+ " : " +str(data))
             client.publish(topic, data, qos=2)
 #            publish.single("pressure/name", data, hostname="test.mosquitto.org")
         i2c.close()

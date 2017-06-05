@@ -1,10 +1,13 @@
-from command import *
-import paho.mqtt.client as mqtt
+import json
 import os.path
 import time
-import json
-from devices.WaterPump import WaterPump
+
+import paho.mqtt.client as mqtt
+
+from command import *
 from devices.Pressure import Pressure
+from devices.WaterPump import WaterPump
+
 #from Drone import Drone
 #from DroneCommandProcessor import DroneCommandProcessor
 
@@ -49,8 +52,14 @@ if __name__ == "__main__":
     client.connect_async(host=mqtt_server_host,
         port=mqtt_server_port,
         keepalive=mqtt_keepalive) 
-    client.loop_forever()
-
+    
+    while True:
+        pressure.publish(client)
+        client.loop()
+  #  client.loop_forever()
+    pressure.close()
+    client.disconnect()
+    client.loop()
 
 
 # if __name__ == "__main__":

@@ -31,22 +31,26 @@ class Pressure:
         data = [0x84,0xc2]
         i2c.write([0x01, 0xc2, 0x85 ]) #Set address at 0xAA register
         i2c.write([0x00])
-        while True:
+        
         #	i2c.write([0x00])
-            print(str(i2c.read(4)))
+       #     print(str(i2c.read(4)))
         #print(str(i2c.read(2)))
         #print(str(i2c.read(3)))
         #print(str(i2c.read(4)))
-            time.sleep(9)
-            data = i2c.read(2)
-            data = int.from_bytes(data,byteorder='big', signed=True)
-            print(str(topic)+ " : " +str(data))
-            infot = client.publish(topic, data, qos=2)
-            infot.wait_for_publish()
+
 #            publish.single("pressure/name", data, hostname="test.mosquitto.org")
+
+    def close(self):
         i2c.close()
 
-
+    def publish(self,cilent):
+        time.sleep(9)
+        data = i2c.read(2)
+        data = int.from_bytes(data,byteorder='big', signed=True)
+        print(str(topic)+ " : " +str(data))
+        infot = client.publish(topic, data, qos=2)
+        #infot.wait_for_publish()
+        return infot
 
     def on_message(self, client, userdata, msg):
         payload_string = msg.payload.decode('utf-8')

@@ -11,6 +11,7 @@ class WaterPump:
      #   self.name = name
         topic = 'pump/'+name
         client.message_callback_add(topic,self.on_message)
+        
         # wiringpi.wiringPiSetupGpio()
         # wiringpi.pinMode(PORT,1)
         # wiringpi.digitalWrite(PORT,not data['status'])

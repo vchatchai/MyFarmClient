@@ -4,6 +4,7 @@ import os.path
 import time
 import json
 from devices.WaterPump import WaterPump
+from devices.Pressure import Pressure
 #from Drone import Drone
 #from DroneCommandProcessor import DroneCommandProcessor
 

@@ -56,6 +56,7 @@ if __name__ == "__main__":
     while True:
         pressure.publish(client)
         client.loop()
+        time.sleep(9)
   #  client.loop_forever()
     pressure.close()
     client.disconnect()

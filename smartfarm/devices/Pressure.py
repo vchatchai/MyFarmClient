@@ -13,7 +13,7 @@ class Pressure:
         '''
         self.name = name
         self.client = client
-        
+
         # topic = 'pump/'+name
         # client.message_callback_add(topic,self.on_message)
         # # wiringpi.wiringPiSetupGpio()
@@ -45,12 +45,12 @@ class Pressure:
     def close(self):
         i2c.close()
 
-    def publish(self,cilent):
+    def publish(self,client):
         data = i2c.read(2)
         topic = 'pressure/'+self.name
         data = int.from_bytes(data,byteorder='big', signed=True)
         print(str(topic)+ " : " +str(data))
-        infot = client.publish(topic, data, qos=2)
+        infot = self.client.publish(topic, data, qos=2)
         
         #infot.wait_for_publish()
         return infot

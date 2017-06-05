@@ -41,7 +41,8 @@ class Pressure:
             data = i2c.read(2)
             data = int.from_bytes(data,byteorder='big', signed=True)
             print(str(topic)+ " : " +str(data))
-            client.publish(topic, data, qos=2)
+            infot = client.publish(topic, data, qos=2)
+            infot.wait_for_publish()
 #            publish.single("pressure/name", data, hostname="test.mosquitto.org")
         i2c.close()
 

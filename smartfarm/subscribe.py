@@ -38,6 +38,7 @@ if __name__ == "__main__":
     client.on_subscribe = on_subscribe
     client.on_message = on_message
     waterPump = WaterPump("water1",client)
+    pressure = Pressure("1", client)
   #  drone = Drone("drone1")
   #  droneProcessor = DroneCommandProcessor("drone1",drone,client)
 

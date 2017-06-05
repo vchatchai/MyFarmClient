@@ -12,7 +12,8 @@ class Pressure:
 
         '''
         self.name = name
-        self.client = clent
+        self.client = client
+        
         # topic = 'pump/'+name
         # client.message_callback_add(topic,self.on_message)
         # # wiringpi.wiringPiSetupGpio()

@@ -4,6 +4,8 @@ import paho.mqtt.client as mqtt
 from pyA20.gpio import gpio
 from pyA20.gpio import port
 import paho.mqtt.publish as publish
+import datetime
+import threading
 
 class Pressure:
     def __init__(self, name, hostname):
@@ -32,6 +34,8 @@ class Pressure:
         data = [0x84,0xc2]
         i2c.write([0x01, 0xc2, 0x85 ]) #Set address at 0xAA register
         i2c.write([0x00])
+        threading.Timer(9, publish).start()
+
         
         #	i2c.write([0x00])
        #     print(str(i2c.read(4)))

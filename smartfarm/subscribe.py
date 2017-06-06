@@ -8,6 +8,7 @@ from command import *
 from devices.Pressure import Pressure
 from devices.WaterPump import WaterPump
 
+
 #from Drone import Drone
 #from DroneCommandProcessor import DroneCommandProcessor
 
@@ -54,15 +55,15 @@ if __name__ == "__main__":
         port=mqtt_server_port,
         keepalive=mqtt_keepalive) 
     
-    while True:
-        pressure.publish(client)
-        client.publish("pressure/1", "111" )
-        client.loop()
-        time.sleep(9)
-  #  client.loop_forever()
+    client.loop_forever()
+    # while True:
+    #     pressure.publish(client)
+    #  #   client.publish("pressure/1", "111" )
+    #     client.loop()
+    #     time.sleep(9)
     pressure.close()
-    client.disconnect()
-    client.loop()
+    # client.disconnect()
+    # client.loop()
 
 
 # if __name__ == "__main__":

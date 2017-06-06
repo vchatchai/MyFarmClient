@@ -48,10 +48,9 @@ class Pressure:
         data = i2c.read(2)
         topic = 'pressure/'+self.name
         data = int.from_bytes(data,byteorder='big', signed=True)
-        print(str(topic)+ " : " +str(data))
+        print(str(topic)+ " : " +str(data) + " : " + self.hostname)
         infot = publish.single(topic, data, qos=2, hostname =  self.hostname)
         
-        infot.wait_for_publish()
         return infot
 
     def on_message(self, client, userdata, msg):

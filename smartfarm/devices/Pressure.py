@@ -5,14 +5,13 @@ from pyA20.gpio import gpio
 from pyA20.gpio import port
 import paho.mqtt.publish as publish
 
-
 class Pressure:
-    def __init__(self, name, client):
+    def __init__(self, name, hostname):
         '''
 
         '''
         self.name = name
-        self.client = client
+        self.hostname = hostname
 
         # topic = 'pump/'+name
         # client.message_callback_add(topic,self.on_message)
@@ -45,14 +44,14 @@ class Pressure:
     def close(self):
         i2c.close()
 
-    def publish(self,client):
+    def publish(self):
         data = i2c.read(2)
         topic = 'pressure/'+self.name
         data = int.from_bytes(data,byteorder='big', signed=True)
         print(str(topic)+ " : " +str(data))
-        infot = self.client.publish(topic, data, qos=2)
+        infot = publish.single(topic, data, qos=2, hostname =  self.hostname)
         
-        #infot.wait_for_publish()
+        infot.wait_for_publish()
         return infot
 
     def on_message(self, client, userdata, msg):

@@ -27,6 +27,7 @@ def on_connect(client, userdata, rc):
     print("Connect result: {}".format(mqtt.connack_string(rc)))
     client.subscribe("pump/water1")
 
+
 def on_subscribe(client, userdata, mid, granted_qos):
     print("Subscribed with QoS: {}".format(granted_qos[0]))
 
@@ -42,7 +43,7 @@ if __name__ == "__main__":
     client.on_subscribe = on_subscribe
     client.on_message = on_message
     waterPump = WaterPump("water1",client)
-    pressure = Pressure("1", client)
+    pressure = Pressure("1", mqtt_server_host)
   #  drone = Drone("drone1")
   #  droneProcessor = DroneCommandProcessor("drone1",drone,client)
 
@@ -55,6 +56,7 @@ if __name__ == "__main__":
     
     while True:
         pressure.publish(client)
+        client.publish("pressure/1", "111" )
         client.loop()
         time.sleep(9)
   #  client.loop_forever()

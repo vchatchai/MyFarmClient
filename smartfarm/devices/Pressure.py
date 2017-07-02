@@ -35,7 +35,7 @@ class Pressure:
         i2c.write([0x01, 0xc2, 0x85 ]) #Set address at 0xAA register
         i2c.write([0x00])
         threading.Timer(9, publish).start()
-
+        threading.Timer)
         
         #	i2c.write([0x00])
        #     print(str(i2c.read(4)))

@@ -5,7 +5,9 @@ import time
 import paho.mqtt.client as mqtt
 
 from command import *
-from devices.PSU import PSUPower
+from devices.Pressure import Pressure
+from devices.WaterPump import WaterPump
+
 
 #from Drone import Drone
 #from DroneCommandProcessor import DroneCommandProcessor

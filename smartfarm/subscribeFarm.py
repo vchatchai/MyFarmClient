@@ -5,7 +5,9 @@ import time
 import paho.mqtt.client as mqtt
 
 from command import *
-from devices.PSU import PSUPower
+from devices.Pressure import Pressure
+from devices.WaterPump import WaterPump
+
 
 #from Drone import Drone
 #from DroneCommandProcessor import DroneCommandProcessor
@@ -24,7 +26,7 @@ mqtt_keepalive = 60
 
 def on_connect(client, userdata, rc):
     print("Connect result: {}".format(mqtt.connack_string(rc)))
-    client.subscribe("psu/rig1")
+    client.subscribe("pump/water1")
 
 
 def on_subscribe(client, userdata, mid, granted_qos):
@@ -41,14 +43,28 @@ if __name__ == "__main__":
     client.on_connect = on_connect
     client.on_subscribe = on_subscribe
     client.on_message = on_message
-    waterPump = PSUPower("rig1",client)
+    waterPump = WaterPump("water1",client)
+    pressure = Pressure("1", mqtt_server_host)
+  #  drone = Drone("drone1")
+  #  droneProcessor = DroneCommandProcessor("drone1",drone,client)
 
+#    client.tls_set(ca_certs = ca_certificate,
+#        certfile=client_certificate,
+#        keyfile=client_key)
     client.connect_async(host=mqtt_server_host,
         port=mqtt_server_port,
         keepalive=mqtt_keepalive) 
     
     client.loop_forever()
+    # while True:
+    #     pressure.publish(client)
+    #  #   client.publish("pressure/1", "111" )
+    #     client.loop()
+    #     time.sleep(9)
     pressure.close()
+    # client.disconnect()
+    # client.loop()
+
 
 # if __name__ == "__main__":
     

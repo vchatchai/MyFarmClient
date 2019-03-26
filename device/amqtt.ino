@@ -18,7 +18,7 @@ void mqtt_reconnect() {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     // If you do not want to use a username and password, change next line to
-    // if (client.connect("ESP8266Client")) {
+    // if (client.connect("ESP8266Client")) {d
     if (mqtt_client.connect(mqtt_client_id.c_str(), mqtt_user, mqtt_password)) {
       Serial.println("connected");
       String subscribe_path = valve_topic +  ESP.getChipId();

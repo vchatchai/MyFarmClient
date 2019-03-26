@@ -13,6 +13,28 @@
   version = "v1.1.1"
 
 [[projects]]
+  digest = "1:8ef506fc2bb9ced9b151dafa592d4046063d744c646c1bbe801982ce87e4bc24"
+  name = "github.com/lib/pq"
+  packages = [
+    ".",
+    "oid",
+  ]
+  pruneopts = "UT"
+  revision = "4ded0e9383f75c197b3a2aaa6d590ac52df6fd79"
+  version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:4b35a3af81dcf220c0a003baf767a031ec420e31967867e7f6662e5db67c5690"
+  name = "github.com/vchatchai/Farm"
+  packages = [
+    "server/src/db",
+    "server/src/mqttclient",
+  ]
+  pruneopts = "UT"
+  revision = "a40a5aa75cbb0d97dbf75d1919722eabb35b8494"
+
+[[projects]]
   branch = "master"
   digest = "1:7b9fdf110cdbe98f41436d1d3b6e0c648920dab6f36a399a8e688c70ae3c7c92"
   name = "golang.org/x/net"
@@ -27,6 +49,11 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/eclipse/paho.mqtt.golang"]
+  input-imports = [
+    "github.com/eclipse/paho.mqtt.golang",
+    "github.com/lib/pq",
+    "github.com/vchatchai/Farm/server/src/db",
+    "github.com/vchatchai/Farm/server/src/mqttclient",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

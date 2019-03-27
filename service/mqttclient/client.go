@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/url"
+	"os"
 	"regexp"
 	"strings"
 	"time"
@@ -13,8 +14,32 @@ import (
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )
 
-func Connect(clientId string, uri *url.URL) mqtt.Client {
-	opts := createClientOptions(clientId, uri)
+const DEFAULT_MQTT_URL = "localhost"
+const DEFAULT_MQTT_PORT = "1883"
+
+var mqtt_url string
+var mqtt_port string
+var mqtt_uri *url.URL
+
+func init() {
+	mqtt_url, ok := os.LookupEnv("MQTT_URL")
+	if !ok {
+		mqtt_url = DEFAULT_MQTT_URL
+	}
+
+	mqtt_port, ok = os.LookupEnv("MQTT_URL")
+	if !ok {
+		mqtt_port = DEFAULT_MQTT_PORT
+	}
+	var err error
+	mqtt_uri, err = url.Parse(fmt.Sprintf(`tcp://%s:%s`, mqtt_url, mqtt_port))
+	if err != nil {
+		panic(err)
+	}
+}
+
+func Connect(clientId string) mqtt.Client {
+	opts := createClientOptions(clientId)
 	client := mqtt.NewClient(opts)
 	token := client.Connect()
 	for !token.WaitTimeout(3 * time.Second) {
@@ -25,18 +50,18 @@ func Connect(clientId string, uri *url.URL) mqtt.Client {
 	return client
 }
 
-func createClientOptions(clientId string, uri *url.URL) *mqtt.ClientOptions {
+func createClientOptions(clientId string) *mqtt.ClientOptions {
 	opts := mqtt.NewClientOptions()
-	opts.AddBroker(fmt.Sprintf("tcp://%s", uri.Host))
-	opts.SetUsername(uri.User.Username())
-	password, _ := uri.User.Password()
+	opts.AddBroker(fmt.Sprintf("tcp://%s", mqtt_uri.Host))
+	opts.SetUsername(mqtt_uri.User.Username())
+	password, _ := mqtt_uri.User.Password()
 	opts.SetPassword(password)
 	opts.SetClientID(clientId)
 	return opts
 }
 
-func Listen(uri *url.URL, topic string) {
-	client := Connect("sub1", uri)
+func Listen(topic string) {
+	client := Connect("sub1")
 	client.Subscribe(topic, 0, func(client mqtt.Client, msg mqtt.Message) {
 		topic := msg.Topic()
 		message := db.Message{
@@ -73,4 +98,9 @@ func getType(topic string) string {
 func getFarmName(topic string) string {
 	result := farmNameRe.FindString(topic)
 	return result
+}
+
+func ValveON(topic string) {
+	client := Connect("pub")
+	client.Publish(topic, 0, false, "on")
 }

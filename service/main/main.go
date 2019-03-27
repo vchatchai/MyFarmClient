@@ -3,7 +3,8 @@ package main
 import (
 	"sync"
 
-	"github.com/vchatchai/Farm/server/src/mqttclient"
+	"github.com/vchatchai/myFarm/service/mqttclient"
+
 	//import the Paho Go MQTT library
 	"log"
 	"net/url"
@@ -29,7 +30,6 @@ func main() {
 	// if topic == "" {
 	// 	topic = "test"
 	// }
-
 	go mqttclient.Listen(uri, TOPIC)
 
 	wg.Add(1)

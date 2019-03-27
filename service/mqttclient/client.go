@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/vchatchai/Farm/server/src/db"
+	"github.com/vchatchai/myFarm/service/db"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 )

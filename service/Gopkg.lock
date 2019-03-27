@@ -13,6 +13,14 @@
   version = "v1.1.1"
 
 [[projects]]
+  digest = "1:ca59b1175189b3f0e9f1793d2c350114be36eaabbe5b9f554b35edee1de50aea"
+  name = "github.com/gorilla/mux"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a7962380ca08b5a188038c69871b8d3fbdf31e89"
+  version = "v1.7.0"
+
+[[projects]]
   digest = "1:8ef506fc2bb9ced9b151dafa592d4046063d744c646c1bbe801982ce87e4bc24"
   name = "github.com/lib/pq"
   packages = [
@@ -40,6 +48,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/eclipse/paho.mqtt.golang",
+    "github.com/gorilla/mux",
     "github.com/lib/pq",
   ]
   solver-name = "gps-cdcl"

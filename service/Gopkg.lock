@@ -25,17 +25,6 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:4b35a3af81dcf220c0a003baf767a031ec420e31967867e7f6662e5db67c5690"
-  name = "github.com/vchatchai/Farm"
-  packages = [
-    "server/src/db",
-    "server/src/mqttclient",
-  ]
-  pruneopts = "UT"
-  revision = "a40a5aa75cbb0d97dbf75d1919722eabb35b8494"
-
-[[projects]]
-  branch = "master"
   digest = "1:7b9fdf110cdbe98f41436d1d3b6e0c648920dab6f36a399a8e688c70ae3c7c92"
   name = "golang.org/x/net"
   packages = [
@@ -52,8 +41,6 @@
   input-imports = [
     "github.com/eclipse/paho.mqtt.golang",
     "github.com/lib/pq",
-    "github.com/vchatchai/Farm/server/src/db",
-    "github.com/vchatchai/Farm/server/src/mqttclient",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

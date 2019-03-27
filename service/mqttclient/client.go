@@ -60,9 +60,11 @@ func createClientOptions(clientId string) *mqtt.ClientOptions {
 	return opts
 }
 
-func Listen(topic string) {
+const anyTopic = "#"
+
+func ListenAnyMessage() {
 	client := Connect("sub1")
-	client.Subscribe(topic, 0, func(client mqtt.Client, msg mqtt.Message) {
+	client.Subscribe(anyTopic, 0, func(client mqtt.Client, msg mqtt.Message) {
 		topic := msg.Topic()
 		message := db.Message{
 			time.Now(),
@@ -74,6 +76,21 @@ func Listen(topic string) {
 		}
 		fmt.Printf("* [%s] %s %v\n", msg.Topic(), string(msg.Payload()), message)
 		db.Save(message)
+	})
+}
+
+const pushButtonTopic = "/home_farm/button/#"
+
+func ListenPushButtonMessage() {
+	valueId := "12315"
+	motorId := "12341"
+	client := Connect("switch")
+	client.Subscribe(pushButtonTopic, 0, func(client mqtt.Client, msg mqtt.Message) {
+		valveTopic := fmt.Sprintf(`/home_farm/valve/%s`, valueId)
+		motorTopic := fmt.Sprintf(`/home_farm/motor/%s`, motorId)
+		client.Publish(valveTopic, 0, false, "on")
+		client.Publish(motorTopic, 0, false, "on")
+
 	})
 }
 
@@ -98,9 +115,4 @@ func getType(topic string) string {
 func getFarmName(topic string) string {
 	result := farmNameRe.FindString(topic)
 	return result
-}
-
-func ValveON(topic string) {
-	client := Connect("pub")
-	client.Publish(topic, 0, false, "on")
 }

@@ -7,10 +7,9 @@ import (
 	//import the Paho Go MQTT library
 )
 
-const TOPIC = "#"
-
 func main() {
-	go mqttclient.Listen(TOPIC)
+	go mqttclient.ListenAnyMessage()
+	go mqttclient.ListenPushButtonMessage()
 	web.StartWebService()
 
 }

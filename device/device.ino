@@ -30,12 +30,12 @@ String temperature_topic = farm + "/sensor/temperature/" ;
 String valve_topic = farm + "/valve/";
 String pump_topic = farm + "/pump/";
 //PIN BUTTON
-#define BUTTON_PIN 5
+#define BUTTON_PIN 0
 //DHT SENSOR
-#define DHTPIN  4
+#define DHTPIN  12
 
 //LED PORT
-#define LED_STATUS 0
+#define LED_STATUS 4
 #define LED_POWER 2
 
 void setup() {

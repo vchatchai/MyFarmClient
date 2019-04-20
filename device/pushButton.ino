@@ -18,5 +18,9 @@ void pushButtonLoop() {
   if ( debouncer.fell() ) {
     ledState = !ledState; // สลับสถานะติด/ดับของ LED
     mqtt_client.publish((valve_topic).c_str(), String(ledState).c_str(), true);
+    
+  Serial.println("\r\npushButtonLoop:");
+//  Serial.println(ledState);
+//  digitalWrite(LED_STATUS, ledState);
   }
 }

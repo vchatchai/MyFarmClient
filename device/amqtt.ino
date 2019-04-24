@@ -42,10 +42,10 @@ void mqtt_reconnect() {
       // Wait 5 seconds before retrying
 
       //LED_POWER ON
-      digitalWrite(LED_POWER, LOW);
+      digitalWrite(LED_POWER, HIGH);
       delay(2500);
       //LED_POWER OFF
-      digitalWrite(LED_POWER, HIGH);
+      digitalWrite(LED_POWER, LOW);
       delay(2500);
 
     }

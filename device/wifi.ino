@@ -7,10 +7,10 @@ void setup_wifi() {
   while (WiFi.status() != WL_CONNECTED) {
 
     //LED_POWER ON
-    digitalWrite(LED_POWER, LOW);
+    digitalWrite(LED_POWER, HIGH);
     delay(500);
     //LED_POWER OFF
-    digitalWrite(LED_POWER, HIGH);
+    digitalWrite(LED_POWER, LOW);
     delay(500);
     Serial.print(".");
   }

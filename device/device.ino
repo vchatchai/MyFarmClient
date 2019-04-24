@@ -12,15 +12,16 @@
 
 
 //WIFI configuration
-#define wifi_ssid "Chatchai"
-#define wifi_password "manager1"
+#define wifi_ssid ""
+#define wifi_password ""
 
 //MQTT configuration
-#define mqtt_server "m11.cloudmqtt.com"
-#define mqtt_port 11621
-#define mqtt_user "kysbvegn"
-#define mqtt_password "Ww2mmbIEU9_e"
-String mqtt_client_id = "ESP8266-"; //This text is concatenated with ChipId to get unique client_id
+#define mqtt_server ""
+#define mqtt_port 
+#define mqtt_user ""
+#define mqtt_password ""
+String mqtt_client_id = ""; 
+//This text is concatenated with ChipId to get unique client_id
 //MQTT Topic configuration
 
 String root = "/";
@@ -32,7 +33,7 @@ String pump_topic = farm + "/pump/";
 //PIN BUTTON
 #define BUTTON_PIN 0
 //DHT SENSOR
-#define DHTPIN  12
+#define DHTPIN  5
 
 //LED PORT
 #define LED_STATUS 4
@@ -68,8 +69,8 @@ void setup() {
 
   Serial.println("Setup completed! Running app...");
   //Initial completed.
-  //LED_POWER ON
-  digitalWrite(LED_POWER, LOW);
+  pumpOff();
+  valveOff();
 }
 
 void loop() {

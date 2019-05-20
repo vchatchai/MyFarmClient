@@ -12,15 +12,15 @@
 
 
 //WIFI configuration
-#define wifi_ssid ""
-#define wifi_password ""
+#define wifi_ssid "Home"
+#define wifi_password "manager1"
 
 //MQTT configuration
-#define mqtt_server ""
-#define mqtt_port 
-#define mqtt_user ""
-#define mqtt_password ""
-String mqtt_client_id = ""; 
+#define mqtt_server "m11.cloudmqtt.com"
+#define mqtt_port 11621
+#define mqtt_user "kysbvegn"
+#define mqtt_password "Ww2mmbIEU9_e"
+String mqtt_client_id = "ESP8266-"; 
 //This text is concatenated with ChipId to get unique client_id
 //MQTT Topic configuration
 
@@ -61,6 +61,7 @@ void setup() {
   mqtt_client_id = ESP.getChipId();
   humidity_topic = humidity_topic + ESP.getChipId();
   temperature_topic = temperature_topic + ESP.getChipId();
+  valve_topic = valve_topic + ESP.getChipId();
   mqttSetup();
   Serial.printf("   Server IP: %s\r\n", mqtt_server);
   Serial.printf("   Username:  %s\r\n", mqtt_user);

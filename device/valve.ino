@@ -4,10 +4,10 @@
 //Change this if you wish to use another diagram
 //#define EnA  10
 //#define EnB  5
-#define In1  D5
-#define In2  D6
-#define In3  D7
-#define In4  D8
+#define In1  12
+#define In2  13
+#define In3  14
+#define In4  15
 
 
 void valveSetup()

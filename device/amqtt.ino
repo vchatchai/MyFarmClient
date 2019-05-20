@@ -21,7 +21,7 @@ void mqtt_reconnect() {
     // if (client.connect("ESP8266Client")) {d
     if (mqtt_client.connect(mqtt_client_id.c_str(), mqtt_user, mqtt_password)) {
       Serial.println("connected");
-      String subscribe_path = valve_topic +  ESP.getChipId();
+      String subscribe_path = valve_topic ;
       // Length (with one extra character for the null terminator)
       int str_len = subscribe_path.length() + 1;
 
@@ -79,14 +79,14 @@ void callback(String topic, byte* message, unsigned int length) {
   // Feel free to add more if statements to control more GPIOs with MQTT
 
   // If a message is received on the topic room/lamp, you check if the message is either on or off. Turns the lamp GPIO according to the message
-  if (topic == valve_topic + ESP.getChipId()) {
+  if (topic == valve_topic) {
     Serial.print("Changing Valve to ");
-    if (messageTemp == "on") {
+    if (messageTemp == "1") {
       valveOn();
-    } else if (messageTemp == "off") {
+    } else if (messageTemp == "0") {
       valveOff();
     }
-  }else if (topic == pump_topic + ESP.getChipId()) {
+  }else if (topic == pump_topic ) {
     Serial.print("Changing Valve to ");
     if (messageTemp == "on") {
       pumpOn();

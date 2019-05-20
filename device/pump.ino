@@ -1,8 +1,8 @@
 
 
 //#define EnB  5
-#define PUMP1  D5
-#define PUMP2 D6
+#define PUMP1 12
+#define PUMP2 13
 
 
 void pumpOn()

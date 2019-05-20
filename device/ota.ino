@@ -2,7 +2,7 @@
 
 
 
-
+int pushButtonState = LOW;
 int ledState = LOW;
 
 //Necesary to make Arduino Software autodetect OTA device

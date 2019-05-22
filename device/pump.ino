@@ -4,6 +4,9 @@
 #define PUMP1 12
 #define PUMP2 13
 
+void pumpSetup(){
+    
+}
 
 void pumpOn()
 { 

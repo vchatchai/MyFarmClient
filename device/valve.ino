@@ -4,12 +4,15 @@
 //Change this if you wish to use another diagram
 //#define EnA  10
 //#define EnB  5
-#define In1  12
-#define In2  13
-#define In3  14
-#define In4  15
+#define In1 12
+#define In2 13
+#define In3 14
+#define In4 15
 
+#define ON LOW
+#define OFF HIGH
 
+#define TYPE 1
 void valveSetup()
 {
   // All motor control pins are outputs
@@ -19,9 +22,36 @@ void valveSetup()
   pinMode(In2, OUTPUT);
   pinMode(In3, OUTPUT);
   pinMode(In4, OUTPUT);
+  digitalWrite(In1, OFF);
+  digitalWrite(In2, OFF);
+  digitalWrite(In3, OFF);
+  digitalWrite(In4, OFF);
 }
 
-void valveOn()
+void valveRelayOn()
+{
+
+  digitalWrite(In1, ON);
+  digitalWrite(In2, ON);
+
+  //LED_STATUS ON
+  ledState = 1;
+  digitalWrite(LED_STATUS, !ledState);
+  Serial.print("Valve On");
+}
+
+void valveRelayOff()
+{
+
+  digitalWrite(In1, OFF);
+  digitalWrite(In2, OFF);
+  //LED_STATUS OFF
+  ledState = 0;
+  digitalWrite(LED_STATUS, !ledState);
+  Serial.print("Valve Off");
+}
+
+void valveDriverOn()
 {
   // turn on motor A
   digitalWrite(In1, HIGH);
@@ -46,7 +76,7 @@ void valveOn()
   Serial.print("Valve On");
 }
 
-void valveOff()
+void valveDriverOff()
 {
   // turn on motor A
   digitalWrite(In1, LOW);
@@ -65,8 +95,32 @@ void valveOff()
   digitalWrite(In3, LOW);
   digitalWrite(In4, LOW);
 
-  //LED_STATUS ON
+  //LED_STATUS OFF
   ledState = 0;
   digitalWrite(LED_STATUS, !ledState);
   Serial.print("Valve Off");
+}
+
+void valveOn()
+{
+  if (TYPE == 1)
+  {
+    valveRelayOn();
+  }
+  else
+  {
+    valveDriverOn();
+  }
+}
+
+void valveOff()
+{
+  if (TYPE == 1)
+  {
+    valveRelayOff();
+  }
+  else
+  {
+    valveDriverOff();
+  }
 }

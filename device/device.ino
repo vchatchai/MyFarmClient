@@ -69,9 +69,7 @@ void setup() {
   Serial.println("   MQTT configured!");
 
   Serial.println("Setup completed! Running app...");
-  //Initial completed.
-  pumpOff();
-  valveOff();
+
 }
 
 void loop() {

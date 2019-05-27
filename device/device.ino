@@ -40,11 +40,11 @@ String pump_topic = farm + "/pump/";
 #define LED_POWER 2
 
 void setup() {
+  valveSetup();
   Serial.begin(115200);
   Serial.println("\r\nBooting...");
 
   Serial.println("\r\nSet Value PinMode.");
-  valveSetup();
   // initialize digital pin LED as an output.
   pinMode(LED_POWER, OUTPUT);
   pinMode(LED_STATUS, OUTPUT);

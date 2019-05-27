@@ -4,10 +4,12 @@
 //Change this if you wish to use another diagram
 //#define EnA  10
 //#define EnB  5
-#define In1 12
-#define In2 13
-#define In3 14
-#define In4 15
+#define In1  15
+#define In2  13
+#define In3  12
+#define In4  13
+#define EN   16
+
 
 #define ON LOW
 #define OFF HIGH
@@ -53,6 +55,7 @@ void valveRelayOff()
 
 void valveDriverOn()
 {
+  digitalWrite(EN, HIGH);
   // turn on motor A
   digitalWrite(In1, HIGH);
   digitalWrite(In2, LOW);
@@ -70,6 +73,9 @@ void valveDriverOn()
   digitalWrite(In3, LOW);
   digitalWrite(In4, LOW);
 
+
+  digitalWrite(EN, LOW);
+
   //LED_STATUS ON
   ledState = 1;
   digitalWrite(LED_STATUS, !ledState);
@@ -78,6 +84,7 @@ void valveDriverOn()
 
 void valveDriverOff()
 {
+  digitalWrite(EN, HIGH);
   // turn on motor A
   digitalWrite(In1, LOW);
   digitalWrite(In2, HIGH);
@@ -94,6 +101,7 @@ void valveDriverOff()
   digitalWrite(In2, LOW);
   digitalWrite(In3, LOW);
   digitalWrite(In4, LOW);
+  digitalWrite(EN, LOW);
 
   //LED_STATUS OFF
   ledState = 0;

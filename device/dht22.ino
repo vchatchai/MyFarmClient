@@ -1,5 +1,8 @@
 #include <DHT.h>
+#include <ArduinoJson.h>
 #define DHTTYPE DHT22
+
+
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -31,7 +34,7 @@ void dhtLoop() {
     float newHum = dht.readHumidity();
     // Read temperature as Celsius (the default)
     float newTemp = dht.readTemperature();
-
+/*
     if (checkBound(newTemp, temp, diff)) {
       temp = newTemp;
       Serial.print("Sent ");
@@ -47,5 +50,22 @@ void dhtLoop() {
       Serial.println(" to " +  humidity_topic );
       mqtt_client.publish((humidity_topic).c_str(), String(hum).c_str(), true);
     }
+    */
+  String msg;
+  mqtt_client_id = ESP.getChipId();
+  DynamicJsonDocument doc(512);
+
+  JsonObject obj = doc.to<JsonObject>();
+
+  obj["NodeID"] = mqtt_client_id;
+  obj["Humidity"] = newHum;
+  obj["Temperature"] = newTemp;
+  obj["Valve1"] = digitalRead(D8);
+  obj["Valve2"] = digitalRead(D7);
+  serializeJson(doc, msg);
+  Serial.print(" ");
+  Serial.print( node_topic);
+  Serial.println( " " + msg );
+  mqtt_client.publish((node_topic).c_str(), msg.c_str(), true);
   }
 }

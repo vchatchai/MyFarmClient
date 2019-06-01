@@ -28,6 +28,7 @@ String root = "/";
 String farm = root+"farm_home";
 String humidity_topic = farm + "/sensor/humidity/" ;
 String temperature_topic = farm + "/sensor/temperature/" ;
+String node_topic = farm+"/node/status";
 String valve_topic = farm + "/valve/";
 String pump_topic = farm + "/pump/";
 //PIN BUTTON
@@ -38,6 +39,20 @@ String pump_topic = farm + "/pump/";
 //LED PORT
 #define LED_STATUS 4
 #define LED_POWER 2
+
+#define D8  15
+#define D7  13
+#define D6  12
+#define D5  14
+#define EN   16
+
+struct Config {
+  char hostname[64];
+  int port;
+};
+
+Config config;                         // <- global configuration object
+const char *filename = "/config.txt";  // <- SD library uses 8.3 filenames
 
 void setup() {
   valveSetup();
@@ -67,6 +82,7 @@ void setup() {
   Serial.printf("   Username:  %s\r\n", mqtt_user);
   Serial.println("   Cliend Id: " + mqtt_client_id);
   Serial.println("   MQTT configured!");
+
 
   Serial.println("Setup completed! Running app...");
 

@@ -51,14 +51,12 @@ struct Config {
   int port;
 };
 
-Config config;                         // <- global configuration object
-const char *filename = "/config.txt";  // <- SD library uses 8.3 filenames
-
 void setup() {
-  valveSetup();
+
   Serial.begin(115200);
   Serial.println("\r\nBooting...");
-
+  configSetup();  
+  valveSetup();
   Serial.println("\r\nSet Value PinMode.");
   // initialize digital pin LED as an output.
   pinMode(LED_POWER, OUTPUT);
@@ -85,6 +83,9 @@ void setup() {
 
 
   Serial.println("Setup completed! Running app...");
+
+  Serial.println("Mounting FS...");
+
 
 }
 

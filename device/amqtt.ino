@@ -6,20 +6,28 @@
 WiFiClient espClient;
 PubSubClient mqtt_client(espClient);
 void mqttSetup(){
+  ticker.attach(3, tick);
 
-  mqtt_client.setServer(mqtt_server, mqtt_port);
+  mqtt_client.setServer(config.config_mqtt_server, config.config_mqtt_port);
   mqtt_client.setCallback(callback);
+
+
+  ticker.detach();
+
+  digitalWrite(LED_POWER, LED_POWER_ON);     // set pin to the opposite state
 }
 
 
 void mqtt_reconnect() {
+
+  ticker.attach(3, tick);
   // Loop until we're reconnected
   while (!mqtt_client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     // If you do not want to use a username and password, change next line to
     // if (client.connect("ESP8266Client")) {d
-    if (mqtt_client.connect(mqtt_client_id.c_str(), mqtt_user, mqtt_password)) {
+    if (mqtt_client.connect(mqtt_client_id.c_str(), config.config_mqtt_user, config.config_mqtt_password)) {
       Serial.println("connected");
       String subscribe_path = valve_topic ;
       // Length (with one extra character for the null terminator)
@@ -41,15 +49,19 @@ void mqtt_reconnect() {
 
       // Wait 5 seconds before retrying
 
-      //LED_POWER ON
-      digitalWrite(LED_POWER, HIGH);
-      delay(2500);
-      //LED_POWER OFF
-      digitalWrite(LED_POWER, LOW);
-      delay(2500);
+      // //LED_POWER ON
+      // digitalWrite(LED_POWER, HIGH);
+      // delay(2500);
+      // //LED_POWER OFF
+      // digitalWrite(LED_POWER, LOW);
+      // delay(2500);
 
     }
   }
+
+  ticker.detach();
+
+  digitalWrite(LED_POWER, LED_POWER_ON);     // set pin to the opposite state
 }
 
 void mqttLoop(){ 

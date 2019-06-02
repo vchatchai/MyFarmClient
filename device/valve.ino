@@ -13,6 +13,7 @@
 #define TYPE 1
 void valveSetup()
 {
+  
   // All motor control pins are outputs
   //  pinMode(EnA, OUTPUT);
   //  pinMode(EnB, OUTPUT);

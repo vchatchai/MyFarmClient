@@ -1,5 +1,6 @@
 #include <ArduinoJson.h>
 #include <FS.h>
+#include <string.h>
 
 // Our configuration structure.
 //
@@ -7,16 +8,13 @@
 // A JsonDocument is *not* a permanent storage; it's only a temporary storage
 // used during the serialization phase. See:
 // https://arduinojson.org/v6/faq/why-must-i-create-a-separate-config-object/
-// struct Config {
-//   char hostname[64];
-//   int port;
-// };
 
- String filename = "/config.txt";  // <- SD library uses 8.3 filenames
-// Config config;                         // <- global configuration object
+
+
+String filename = "/config.json";  // <- SD library uses 8.3 filenames
 
 // Loads the configuration from a file
-void loadConfiguration(String filename) {
+void loadConfiguration() {
   // Open file for reading
 
  
@@ -42,8 +40,49 @@ void loadConfiguration(String filename) {
  
   Serial.println( doc["hostname"].as<const char*>());
   Serial.println( doc["port"].as<const char*>());
-  
 
+  
+    //WIFI configuration
+  config.config_wifi_ssid =  "Home";
+  config.config_wifi_password = "manager1";
+
+//MQTT configuration
+ config.config_mqtt_server = "m11.cloudmqtt.com";
+ config.config_mqtt_port = 11621;
+ config.config_mqtt_user = "kysbvegn";
+ config.config_mqtt_password = "Ww2mmbIEU9_e";
+
+     //WIFI configuration
+
+  String ssid = doc["wifi_ssid"];
+  String ssid_pass = doc["wifi_password"];
+  config.config_wifi_ssid = strdup(ssid.c_str());
+  config.config_wifi_password = strdup(ssid_pass.c_str());
+  // config.config_wifi_password =  ssid_pass.c_str();
+  // ssid.toCharArray(config.config_wifi_ssid,ssid.length()+1);
+  // ssid_pass.toCharArray(config.config_wifi_password, ssid_pass.length()+1);
+
+//MQTT configuration
+  String mqtt = doc["mqtt_server"];
+  String mqtt_user = doc["mqtt_user"];
+  String mqtt_pass = doc["mqtt_password"];
+  config.config_mqtt_server = strdup(mqtt.c_str());
+  config.config_mqtt_user = strdup(mqtt_user.c_str());
+  config.config_mqtt_password = strdup(mqtt_pass.c_str());
+//   mqtt.toCharArray( config.config_mqtt_server,mqtt.length());
+//   mqtt_user.toCharArray(config.config_mqtt_user,mqtt_user.length());
+//   mqtt_pass.toCharArray(config.config_mqtt_password,mqtt_pass.length());
+//  config.config_mqtt_port = 11621;
+
+
+ 
+  // config.config_mqtt_port = doc["port"] | 11621;
+  // strlcpy(config.config_mqtt_server,doc["mqtt_server"] | "m11.cloudmqtt.com",  sizeof(config.config_mqtt_server));         
+  // strlcpy(config.config_mqtt_user,doc["mqtt_user"] | "Ww2mmbIEU9_e",  sizeof(config.config_mqtt_user)); 
+  // strlcpy(config.config_mqtt_password,doc["mqtt_password"] | "kysbvegn",  sizeof(config.config_mqtt_password)); 
+  // strlcpy(config.config_wifi_ssid,doc["wifi_ssid"] ,  sizeof(config.config_wifi_ssid)); 
+  // strlcpy(config.config_wifi_password,doc["wifi_password"]  ,  sizeof(config.config_mqtt_user)); 
+  
   // Copy values from the JsonDocument to the Config
 //   config.port = doc["port"] | 2731;
 //   strlcpy(config.hostname,                  // <- destination
@@ -55,7 +94,7 @@ void loadConfiguration(String filename) {
 }
 
 // Saves the configuration to a file
-void saveConfiguration(String filename) {
+void saveConfiguration() {
   // Delete existing file, otherwise the configuration is appended to the file
   SPIFFS.remove(filename);
 
@@ -72,8 +111,29 @@ void saveConfiguration(String filename) {
   StaticJsonDocument<256> doc;
 
   // Set the values in the document
-  doc["hostname"] = "localhost";
-  doc["port"] = "1234";
+  // doc["hostname"] = "localhost";
+  // doc["port"] = "1234";
+
+//   //WIFI configuration
+// doc["wifi_ssid"] =  "Home";
+// doc["wifi_password"] = "manager1";
+
+// //MQTT configuration
+//  doc["mqtt_server"]= "m11.cloudmqtt.com";
+//  doc["mqtt_port"]= 11621;
+//  doc["mqtt_user"]= "kysbvegn";
+ doc["mqtt_password"]= "Ww2mmbIEU9_e";
+
+
+  //WIFI configuration
+// doc["wifi_ssid"] =  "Home";
+// doc["wifi_password"] = "manager1";
+
+//MQTT configuration
+ doc["mqtt_server"]= config.config_mqtt_server;
+ doc["mqtt_port"]= 11621;
+ doc["mqtt_user"]= config.config_mqtt_user;
+//  doc["mqtt_password"]= config.config_wifi_password;
 
   // Serialize JSON to file
   if (serializeJson(doc, file) == 0) {
@@ -120,11 +180,11 @@ void configSetup() {
 
   // Should load default config if run for the first time
   Serial.println(F("Loading configuration..."));
-  loadConfiguration(filename);
+  loadConfiguration();
 
   // Create configuration file
-  Serial.println(F("Saving configuration..."));
-  saveConfiguration(filename);
+  // Serial.println(F("Saving configuration..."));
+  // saveConfiguration(filename);
 
   // Dump config file
   Serial.println(F("Print config file..."));

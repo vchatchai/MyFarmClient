@@ -1,12 +1,19 @@
 
 
 
+Ticker otaTicker;
 
 int pushButtonState = LOW;
 int ledState = LOW;
 
 //Necesary to make Arduino Software autodetect OTA device
 WiFiServer TelnetServer(8266);
+void otaTick(){
+  int state = digitalRead(LED_POWER);  // get the current state of GPIO1 pin
+  digitalWrite(LED_POWER, !state);     // set pin to the opposite state
+  digitalWrite(LED_STATUS, !state);     // set pin to the opposite state
+
+}
 
 void OTASetup(){
 
@@ -14,10 +21,12 @@ void OTASetup(){
   TelnetServer.begin();   //Necesary to make Arduino Software autodetect OTA device
   ArduinoOTA.onStart([]() {
     Serial.println("OTA starting...");
+    otaTicker.attach(0.6, otaTick);
   });
   ArduinoOTA.onEnd([]() {
     Serial.println("OTA update finished!");
     Serial.println("Rebooting...");
+    otaTicker.detach();
   });
   ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
     Serial.printf("OTA in progress: %u%%\r\n", (progress / (total / 100)));
@@ -31,6 +40,7 @@ void OTASetup(){
     else if (error == OTA_END_ERROR) Serial.println("End Failed");
   });
   ArduinoOTA.begin();
+
   Serial.println("OK");
 
 }

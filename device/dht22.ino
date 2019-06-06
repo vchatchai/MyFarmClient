@@ -58,8 +58,8 @@ void dhtLoop() {
   JsonObject obj = doc.to<JsonObject>();
 
   obj["NodeID"] = mqtt_client_id;
-  obj["Humidity"] = newHum;
   obj["Temperature"] = newTemp;
+  obj["Humidity"] = newHum;
   obj["Valve1"] = digitalRead(D8);
   obj["Valve2"] = digitalRead(D7);
   serializeJson(doc, msg);

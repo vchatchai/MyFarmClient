@@ -53,7 +53,7 @@ void loadConfiguration() {
  config.config_mqtt_password = "Ww2mmbIEU9_e";
 
      //WIFI configuration
-
+/*
   String ssid = doc["wifi_ssid"];
   String ssid_pass = doc["wifi_password"];
   config.config_wifi_ssid = strdup(ssid.c_str());
@@ -72,9 +72,9 @@ void loadConfiguration() {
 //   mqtt.toCharArray( config.config_mqtt_server,mqtt.length());
 //   mqtt_user.toCharArray(config.config_mqtt_user,mqtt_user.length());
 //   mqtt_pass.toCharArray(config.config_mqtt_password,mqtt_pass.length());
-//  config.config_mqtt_port = 11621;
+ config.config_mqtt_port = 11621;
 
-
+*/
  
   // config.config_mqtt_port = doc["port"] | 11621;
   // strlcpy(config.config_mqtt_server,doc["mqtt_server"] | "m11.cloudmqtt.com",  sizeof(config.config_mqtt_server));         
@@ -119,9 +119,9 @@ void saveConfiguration() {
 // doc["wifi_password"] = "manager1";
 
 // //MQTT configuration
-//  doc["mqtt_server"]= "m11.cloudmqtt.com";
-//  doc["mqtt_port"]= 11621;
-//  doc["mqtt_user"]= "kysbvegn";
+ doc["mqtt_server"]= "m11.cloudmqtt.com";
+ doc["mqtt_port"]= 11621;
+ doc["mqtt_user"]= "kysbvegn";
  doc["mqtt_password"]= "Ww2mmbIEU9_e";
 
 
@@ -130,9 +130,9 @@ void saveConfiguration() {
 // doc["wifi_password"] = "manager1";
 
 //MQTT configuration
- doc["mqtt_server"]= config.config_mqtt_server;
- doc["mqtt_port"]= 11621;
- doc["mqtt_user"]= config.config_mqtt_user;
+//  doc["mqtt_server"]= config.config_mqtt_server;
+//  doc["mqtt_port"]= 11621;
+//  doc["mqtt_user"]= config.config_mqtt_user;
 //  doc["mqtt_password"]= config.config_wifi_password;
 
   // Serialize JSON to file

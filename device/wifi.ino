@@ -22,7 +22,6 @@ bool shouldSaveConfig = false;
 //callback notifying us of the need to save config
 void saveConfigCallback () {
   Serial.println("Should save config");
-  saveConfiguration();
   shouldSaveConfig = true;
 }
 
@@ -52,8 +51,8 @@ void setup_wifi() {
   // Serial.println("mounting FS...");
 
 
+  statusTicker.attach(0.6, statusTick);
 
-  ticker.attach(0.6, tick);
 
   WiFiManagerParameter custom_mqtt_server("server", "mqtt server", config.config_mqtt_server, 40);
   // WiFiManagerParameter custom_mqtt_port("port", "mqtt port", config.config_mqtt_port, 6);
@@ -67,6 +66,7 @@ void setup_wifi() {
   //set config save notify callback
   wifiManager.setSaveConfigCallback(saveConfigCallback);
   // wifiManager.setAPCallback(configModeCallback);
+
 
 
   //set static ip
@@ -103,10 +103,15 @@ void setup_wifi() {
   }
 
 
+
     
     //if you get here you have connected to the WiFi
     Serial.println("connected...yeey :)");
-    ticker.detach();
+    statusTicker.detach();
+
+    if(shouldSaveConfig){
+      saveConfiguration();
+    }
 
     digitalWrite(LED_POWER, LED_POWER_ON);
 

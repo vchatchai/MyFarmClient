@@ -1,8 +1,21 @@
 #include <Bounce2.h>
+#include <WiFiManager.h>          
 
 Bounce debouncer = Bounce(); // สร้าง debouncer object
 long nowTime = 0; 
 long lastTime = 0; 
+long resetTime = 0;
+
+Ticker resetTicker;
+
+
+void resetTick(){
+  int state = digitalRead(LED_POWER);  // get the current state of GPIO1 pin
+  digitalWrite(LED_POWER, !state);     // set pin to the opposite state
+  digitalWrite(LED_STATUS, !state);     // set pin to the opposite state
+
+}
+
 void pushButtonSetup() { 
 
   // debouncer.attach(BUTTON_PIN, INPUT_PULLUP);
@@ -13,7 +26,7 @@ void pushButtonSetup() {
 
 }
 
-
+int typeCode;
 
 void pushButtonLoop() {
   // debouncer.update(); // อัปเดตสถานะให้กับ debouncer object
@@ -25,20 +38,47 @@ void pushButtonLoop() {
 
     int value = digitalRead(BUTTON_PIN);
     if(value == LOW){
-      if(nowTime -lastTime > 3000){
-        pushButtonState = !pushButtonState; // สลับสถานะติด/ดับของ LED
-        String value = "";
-        // if(pushButtonState == 1){
-        //   value = "on";
-        // }else{
-        //   value = "off";
-        // }
-  
-        mqtt_client.publish((valve_topic).c_str(), String(pushButtonState).c_str(), true);
-        lastTime = nowTime;
-      Serial.println("\r\npushButtonLoop:" + value);
+      
+      if(nowTime - resetTime > 6000){
+        if(typeCode != 3){
+          resetTicker.attach(0.6, resetTick);
+          typeCode = 3;
+        }
+      }else if(nowTime -lastTime > 3000){
+        typeCode = 1;
       }
 
+    }else{
+
+        resetTime =  nowTime;
+
+        switch (typeCode)
+        {
+        case 1:{
+          pushButtonState = !pushButtonState; // สลับสถานะติด/ดับของ LED
+          String value = "";
+        //  powerTicker.attach(0.5, powerTick);
+          mqtt_client.publish((valve_topic).c_str(), String(pushButtonState).c_str(), true);
+          lastTime = nowTime;
+          Serial.println("\r\npushButtonLoop:" + value);
+        }
+          break;
+        case 2:
+          break;
+        case 3:{
+
+          WiFiManager wifiManager;
+          wifiManager.resetSettings();
+          resetTicker.detach();
+          ESP.reset();
+        }
+          break;
+        
+        
+        default:
+          break;
+        }
+        typeCode = 0;
     }
 //  Serial.println(ledState);
 //  digitalWrite(LED_STATUS, ledState);

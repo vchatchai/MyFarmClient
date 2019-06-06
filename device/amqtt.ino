@@ -6,13 +6,13 @@
 WiFiClient espClient;
 PubSubClient mqtt_client(espClient);
 void mqttSetup(){
-  ticker.attach(3, tick);
+  statusTicker.attach(3, statusTick);
 
   mqtt_client.setServer(config.config_mqtt_server, config.config_mqtt_port);
   mqtt_client.setCallback(callback);
 
 
-  ticker.detach();
+  statusTicker.detach();
 
   digitalWrite(LED_POWER, LED_POWER_ON);     // set pin to the opposite state
 }
@@ -20,7 +20,7 @@ void mqttSetup(){
 
 void mqtt_reconnect() {
 
-  ticker.attach(3, tick);
+  statusTicker.attach(3, statusTick);
   // Loop until we're reconnected
   while (!mqtt_client.connected()) {
     Serial.print("Attempting MQTT connection...");
@@ -59,7 +59,7 @@ void mqtt_reconnect() {
     }
   }
 
-  ticker.detach();
+  statusTicker.detach();
 
   digitalWrite(LED_POWER, LED_POWER_ON);     // set pin to the opposite state
 }
@@ -92,6 +92,7 @@ void callback(String topic, byte* message, unsigned int length) {
 
   // If a message is received on the topic room/lamp, you check if the message is either on or off. Turns the lamp GPIO according to the message
   if (topic == valve_topic) {
+    powerTicker.detach();
     Serial.print("Changing Valve to ");
     if (messageTemp == "1") {
       valveOn();
@@ -99,6 +100,7 @@ void callback(String topic, byte* message, unsigned int length) {
       valveOff();
     }
   }else if (topic == pump_topic ) {
+    powerTicker.detach();
     Serial.print("Changing Valve to ");
     if (messageTemp == "on") {
       pumpOn();

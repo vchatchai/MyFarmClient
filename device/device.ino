@@ -12,7 +12,6 @@
 #include <ArduinoOTA.h>   //For OTA
 //for LED status
 #include <Ticker.h>
-Ticker ticker;
 
 struct Config {
     char name;
@@ -67,11 +66,24 @@ String pump_topic = farm + "/pump/";
 #define EN   16
 
 
-void tick()
+
+Ticker statusTicker;
+Ticker powerTicker;
+
+void statusTick()
 {
+
   //toggle state
   int state = digitalRead(LED_POWER);  // get the current state of GPIO1 pin
   digitalWrite(LED_POWER, !state);     // set pin to the opposite state
+}
+
+void powerTick()
+{
+
+  //toggle state
+  int state = digitalRead(LED_STATUS);  // get the current state of GPIO1 pin
+  digitalWrite(LED_STATUS, !state);     // set pin to the opposite state
 
 }
 
@@ -110,6 +122,7 @@ void setup() {
   Serial.println("Setup completed! Running app...");
 
   Serial.println("Mounting FS...");
+
 
 
 }

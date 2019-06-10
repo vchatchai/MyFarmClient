@@ -47,6 +47,10 @@ void setup_wifi() {
 
 
 
+  //WiFiManager
+  //Local intialization. Once its business is done, there is no need to keep it around
+  WiFiManager wifiManager;
+
   //read configuration from FS json
   // Serial.println("mounting FS...");
 
@@ -59,9 +63,6 @@ void setup_wifi() {
   WiFiManagerParameter custom_mqtt_user("user", "mqtt user", config.config_mqtt_user, 20);
   WiFiManagerParameter custom_mqtt_pass("password", "mqtt password", config.config_mqtt_password, 20);
 
-  //WiFiManager
-  //Local intialization. Once its business is done, there is no need to keep it around
-  WiFiManager wifiManager;
 
   //set config save notify callback
   wifiManager.setSaveConfigCallback(saveConfigCallback);

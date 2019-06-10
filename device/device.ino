@@ -14,15 +14,15 @@
 #include <Ticker.h>
 
 struct Config {
-    char name;
-    int port;
-    char *config_wifi_ssid;
-    char *config_wifi_password ;
+  char name;
+  int port;
+  char *config_wifi_ssid;
+  char *config_wifi_password ;
 
-    char *config_mqtt_server ; 
-    int config_mqtt_port ;
-    char *config_mqtt_user;
-    char *config_mqtt_password ;
+  char *config_mqtt_server ;
+  int config_mqtt_port ;
+  char *config_mqtt_user;
+  char *config_mqtt_password ;
 };
 
 Config config;                         // <- global configuration object
@@ -37,15 +37,15 @@ Config config;                         // <- global configuration object
 // #define mqtt_port 11621
 // #define mqtt_user "kysbvegn"
 // #define mqtt_password "Ww2mmbIEU9_e"
-String mqtt_client_id = "ESP8266-"; 
+String mqtt_client_id = "ESP8266-";
 //This text is concatenated with ChipId to get unique client_id
 //MQTT Topic configuration
 
 String root = "/";
-String farm = root+"farm_home";
+String farm = root + "farm_home";
 String humidity_topic = farm + "/sensor/humidity/" ;
 String temperature_topic = farm + "/sensor/temperature/" ;
-String node_topic = farm+"/node/status";
+String node_topic = farm + "/node/status";
 String valve_topic = farm + "/valve/";
 String pump_topic = farm + "/pump/";
 //PIN BUTTON
@@ -92,7 +92,7 @@ void setup() {
 
   Serial.begin(115200);
   Serial.println("\r\nBooting...");
-  configSetup();  
+  configSetup();
   valveSetup();
   Serial.println("\r\nSet Value PinMode.");
   // initialize digital pin LED as an output.

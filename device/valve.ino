@@ -10,6 +10,7 @@
 #define ON HIGH
 #define OFF LOW
 
+
 #define TYPE 1
 void valveSetup()
 {
@@ -32,8 +33,8 @@ void valveSetup()
 void valveRelayOn()
 {
 
-  digitalWrite(D5, ON);
-  digitalWrite(D6, ON);
+  digitalWrite(D7, ON);
+  digitalWrite(D8, ON);
 
   //LED_STATUS ON
   ledState = 2;
@@ -44,8 +45,8 @@ void valveRelayOn()
 void valveRelayOff()
 {
 
-  digitalWrite(D5, OFF);
-  digitalWrite(D6, OFF);
+  digitalWrite(D7, OFF);
+  digitalWrite(D8, OFF);
   //LED_STATUS OFF
   ledState = 0;
   digitalWrite(LED_STATUS, !ledState);
@@ -112,24 +113,24 @@ void valveDriverOff()
 
 void valveOn()
 {
-  // if (TYPE == 1)
-  // {
-  //   valveRelayOn();
-  // }
-  // else
-  // {
+  if (TYPE == 1)
+  {
+    valveRelayOn();
+  }
+  else
+  {
     valveDriverOn();
-  // }
+  }
 }
 
 void valveOff()
 {
-  // if (TYPE == 1)
-  // {
-  //   valveRelayOff();
-  // }
-  // else
-  // {
+  if (TYPE == 1)
+  {
+    valveRelayOff();
+  }
+  else
+  {
     valveDriverOff();
-  // }
+  }
 }

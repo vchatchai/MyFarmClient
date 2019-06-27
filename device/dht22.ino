@@ -1,5 +1,4 @@
 #include <DHT.h>
-#include <ArduinoJson.h>
 #define DHTTYPE DHT22
 
 

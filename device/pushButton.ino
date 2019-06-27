@@ -55,12 +55,22 @@ void pushButtonLoop() {
         switch (typeCode)
         {
         case 1:{
-          pushButtonState = !pushButtonState; // สลับสถานะติด/ดับของ LED
-          String value = "";
+
+          String msg;
+          mqtt_client_id = ESP.getChipId();
+          DynamicJsonDocument doc(512);
+
+          JsonObject obj = doc.to<JsonObject>();
+
+          obj["NodeID"] = mqtt_client_id;
+          obj["PushButton"] =  1;
+
+          serializeJson(doc, msg);
+
         //  powerTicker.attach(0.5, powerTick);
-          mqtt_client.publish((valve_topic).c_str(), String(pushButtonState).c_str(), true);
+          mqtt_client.publish((pushbutton_topic).c_str(), msg.c_str(), true);
           lastTime = nowTime;
-          Serial.println("\r\npushButtonLoop:" + value);
+          Serial.println("\r\npushButtonLoop:" );
         }
           break;
         case 2:

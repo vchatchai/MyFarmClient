@@ -82,6 +82,14 @@ void callback(String topic, byte* message, unsigned int length) {
   Serial.print(". Message: ");
   String messageTemp;
 
+  StaticJsonDocument<256> doc;
+  deserializeJson(doc, message);
+
+
+  const char*  valve1 = doc["valve1"];
+
+  const char*  valve2 = doc["valve2"];
+
   for (int i = 0; i < length; i++) {
     Serial.print((char)message[i]);
     messageTemp += (char)message[i];
